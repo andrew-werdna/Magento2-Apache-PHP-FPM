@@ -1,0 +1,44 @@
+version: '2'
+
+services:
+
+  databaseserver:
+    image: mariadb:latest
+    container_name: magento2db
+    build: ./builds/mariadb/
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=magento2
+      - MYSQL_DATABASE=magento2
+      - MYSQL_USER=magento2
+      - MYSQL_PASSWORD=magento2
+
+  webserver:
+    image: ubuntu:16.04
+    container_name: magento2webserver
+    build: ./builds/apache/
+    ports:
+      - 80:80
+      - 443:443
+      - 9000:9000
+    volumes:
+      - ../application:/var/www/html
+      - ~/.composer/auth.json:/root/.composer/auth.json
+    tty: true
+    depends_on:
+      - databaseserver
+
+  # varnish:
+  #   image: ubuntu:16.04
+  #   container_name: magento2varnish
+  #   build: ./builds/varnish/
+  #   ports:
+  #     - 80:80
+  #     - 6082:6082
+  #   environment:
+  #     - CACHE_SIZE=256M
+  #   #volumes:
+  #     #- ./builds/varnish/default.vcl:/etc/varnish/default.vcl
+  #   depends_on:
+  #     - webserver
