@@ -1,8 +1,8 @@
 FROM ubuntu:16.04
 
-RUN apt update -y && apt upgrade -y
+RUN apt-get update -y && apt-get upgrade -y
 
-RUN apt install -y \
+RUN apt-get install -y \
     curl \
     vim \
     man \
@@ -18,9 +18,9 @@ RUN apt install -y \
     # tmux \
     # build-essential
 
-RUN apt install -y apache2
+RUN apt-get install -y apache2
 
-RUN apt install -y \
+RUN apt-get install -y \
     libapache2-mod-fastcgi \
     libmcrypt-dev \
     php7.0-fpm \
@@ -30,7 +30,7 @@ RUN a2enmod alias rewrite fastcgi expires headers remoteip ssl actions
 ADD ./php-fpm.conf /etc/apache2/conf-available/php-fpm.conf
 RUN a2enconf php-fpm
 
-RUN apt install -y \
+RUN apt-get install -y \
     php7.0-mysql \
     php7.0-curl \
     php7.0-gd \

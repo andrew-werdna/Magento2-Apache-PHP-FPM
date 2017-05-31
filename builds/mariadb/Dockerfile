@@ -1,3 +1,3 @@
 FROM mariadb:latest
 
-RUN apt update -y && apt upgrade -y
+RUN apt-get update -y && apt-get upgrade -y
